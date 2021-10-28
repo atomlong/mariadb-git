@@ -112,6 +112,7 @@ package_mariadb-libs-git() {
   conflicts=(mariadb-libs libmysqlclient{,-git} libmariadbclient{,-git} mariadb-connector-c{,-git})
   provides=(mariadb-libs libmariadbclient{,-git} mariadb-connector-c{,-git} libmariadb.so libmariadbd.so)
   replaces=(libmariadbclient-git)
+  options=('staticlibs')
 
   for dir in libmariadb libmysqld libservices include; do
     DESTDIR="$pkgdir" cmake --install "build/$dir"
@@ -125,9 +126,6 @@ package_mariadb-libs-git() {
   install -D -m0644 $pkgbase/support-files/mysql.m4 "$pkgdir"/usr/share/aclocal/mysql.m4
 
   cd "$pkgdir"
-
-  # remove static libraries
-  rm usr/lib/*.a
 
   # remove man pages
   rm -r usr/share/man
